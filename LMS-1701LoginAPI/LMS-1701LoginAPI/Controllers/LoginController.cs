@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using LMS_1701LoginAPI.DAL;
+using DM = LMS_1701LoginAPI.Models;
+using AutoMapper;
 
 namespace LMS_1701LoginAPI.Controllers
 {
@@ -18,9 +20,16 @@ namespace LMS_1701LoginAPI.Controllers
         private UserScoresLoginEntities db = new UserScoresLoginEntities();
 
         // GET: api/Login
-        public IQueryable<User> GetUsers()
-        {
-            return db.Users;
+        public IEnumerable<DM.User> GetUsers()
+        { 
+            var temp = db.Users.ToList();
+            List<DM.User> users = new List<Models.User>();
+            foreach (var item in temp)
+            {
+                users.Add(DM.ConvertEntityToModel.UserToModel(item));
+
+            }
+            return users;
         }
 
         // GET: api/Login/5
