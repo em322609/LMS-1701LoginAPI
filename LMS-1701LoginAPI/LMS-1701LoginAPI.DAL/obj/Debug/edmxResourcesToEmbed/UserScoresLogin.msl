@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="UserScoresLoginModelStoreContainer" CdmEntityContainer="UserScoresLoginEntities">
+    <EntitySetMapping Name="Batches">
+      <EntityTypeMapping TypeName="UserScoresLoginModel.Batch">
+        <MappingFragment StoreEntitySet="Batch">
+          <ScalarProperty Name="BatchPK" ColumnName="BatchPK" />
+          <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="LengthInWeeks" ColumnName="LengthInWeeks" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExamAssessments">
+      <EntityTypeMapping TypeName="UserScoresLoginModel.ExamAssessment">
+        <MappingFragment StoreEntitySet="ExamAssessment">
+          <ScalarProperty Name="ExamAssessmentID" ColumnName="ExamAssessmentID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Attempts" ColumnName="Attempts" />
+          <ScalarProperty Name="SettingsID" ColumnName="SettingsID" />
+          <ScalarProperty Name="TimeRemaining" ColumnName="TimeRemaining" />
+          <ScalarProperty Name="IsExamComplete" ColumnName="IsExamComplete" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExamSettings">
+      <EntityTypeMapping TypeName="UserScoresLoginModel.ExamSetting">
+        <MappingFragment StoreEntitySet="ExamSettings">
+          <ScalarProperty Name="ExamSettingsID" ColumnName="ExamSettingsID" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="LengthOfExamInMinutes" ColumnName="LengthOfExamInMinutes" />
+          <ScalarProperty Name="ExamTemplateID" ColumnName="ExamTemplateID" />
+          <ScalarProperty Name="Editable" ColumnName="Editable" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="AllowedAttempts" ColumnName="AllowedAttempts" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StatusTypes">
+      <EntityTypeMapping TypeName="UserScoresLoginModel.StatusType">
+        <MappingFragment StoreEntitySet="StatusType">
+          <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="UserScoresLoginModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UserPK" ColumnName="UserPK" />
+          <ScalarProperty Name="fname" ColumnName="fname" />
+          <ScalarProperty Name="lname" ColumnName="lname" />
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserTypes">
+      <EntityTypeMapping TypeName="UserScoresLoginModel.UserType">
+        <MappingFragment StoreEntitySet="UserType">
+          <ScalarProperty Name="UserTypePK" ColumnName="UserTypePK" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UserScoresLoginModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="BatchPK" />
+    </Key>
+    <Property Name="BatchPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BatchID" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="80" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="LengthInWeeks" Type="int" />
+  </EntityType>
+  <EntityType Name="ExamAssessment">
+    <Key>
+      <PropertyRef Name="ExamAssessmentID" />
+    </Key>
+    <Property Name="ExamAssessmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="Attempts" Type="int" />
+    <Property Name="SettingsID" Type="int" />
+    <Property Name="TimeRemaining" Type="time" Precision="7" />
+    <Property Name="IsExamComplete" Type="bit" />
+    <Property Name="Score" Type="decimal" Precision="5" Scale="2" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'UserScoresLogin.dbo.ExamQuestions' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="ExamQuestions">
+          <Property Name="SettingID" Type="int" />
+          <Property Name="QuestionID" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+  <EntityType Name="ExamSettings">
+    <Key>
+      <PropertyRef Name="ExamSettingsID" />
+    </Key>
+    <Property Name="ExamSettingsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" />
+    <Property Name="LengthOfExamInMinutes" Type="int" />
+    <Property Name="ExamTemplateID" Type="varchar" MaxLength="50" />
+    <Property Name="Editable" Type="bit" />
+    <Property Name="EndTime" Type="datetime" />
+    <Property Name="AllowedAttempts" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'UserScoresLogin.dbo.ExamSettings_Batch' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="ExamSettings_Batch">
+          <Property Name="SettingID" Type="int" />
+          <Property Name="BatchID" Type="int" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'UserScoresLogin.dbo.ExamSettings_User' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="ExamSettings_User">
+          <Property Name="SettingID" Type="int" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'UserScoresLogin.dbo.QuestionOrder' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="QuestionOrder">
+          <Property Name="QuestionNumber" Type="int" />
+          <Property Name="QuestionID" Type="varchar" MaxLength="50" />
+          <Property Name="ExamAssessmentFK" Type="int" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'UserScoresLogin.dbo.Roster' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Roster">
+          <Property Name="UserID" Type="int" />
+          <Property Name="BatchID" Type="int" />
+          <Property Name="Status" Type="int" />
+        </EntityType>-->
+  <EntityType Name="StatusType">
+    <Key>
+      <PropertyRef Name="StatusTypeID" />
+    </Key>
+    <Property Name="StatusTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserPK" />
+    </Key>
+    <Property Name="UserPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fname" Type="varchar" MaxLength="40" />
+    <Property Name="lname" Type="varchar" MaxLength="40" />
+    <Property Name="UserType" Type="int" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserType">
+    <Key>
+      <PropertyRef Name="UserTypePK" />
+    </Key>
+    <Property Name="UserTypePK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <Association Name="FK__ExamAsses__Setti__59063A47">
+    <End Role="ExamSettings" Type="Self.ExamSettings" Multiplicity="0..1" />
+    <End Role="ExamAssessment" Type="Self.ExamAssessment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExamSettings">
+        <PropertyRef Name="ExamSettingsID" />
+      </Principal>
+      <Dependent Role="ExamAssessment">
+        <PropertyRef Name="SettingsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExamAsses__UserI__5812160E">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="ExamAssessment" Type="Self.ExamAssessment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserPK" />
+      </Principal>
+      <Dependent Role="ExamAssessment">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+error 6004: The table 'UserScoresLogin.dbo.ExamQuestions' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__ExamQuest__Setti__619B8048" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'UserScoresLogin.dbo.ExamSettings_Batch' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__ExamSetti__Batch__5DCAEF64" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'UserScoresLogin.dbo.ExamSettings_Batch' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__ExamSetti__Setti__5CD6CB2B" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'UserScoresLogin.dbo.ExamSettings_User' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__ExamSetti__UserI__5FB337D6" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'UserScoresLogin.dbo.QuestionOrder' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__QuestionO__ExamA__5AEE82B9" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'UserScoresLogin.dbo.Roster' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__Roster__BatchID__52593CB8" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'UserScoresLogin.dbo.Roster' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__Roster__Status__534D60F1" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'UserScoresLogin.dbo.Roster' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__Roster__UserID__5165187F" />-->
+  <Association Name="FK__User__UserType__4AB81AF0">
+    <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserType">
+        <PropertyRef Name="UserTypePK" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="UserType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="UserScoresLoginModelStoreContainer">
+    <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExamAssessment" EntityType="Self.ExamAssessment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExamSettings" EntityType="Self.ExamSettings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StatusType" EntityType="Self.StatusType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__ExamAsses__Setti__59063A47" Association="Self.FK__ExamAsses__Setti__59063A47">
+      <End Role="ExamSettings" EntitySet="ExamSettings" />
+      <End Role="ExamAssessment" EntitySet="ExamAssessment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExamAsses__UserI__5812160E" Association="Self.FK__ExamAsses__UserI__5812160E">
+      <End Role="User" EntitySet="User" />
+      <End Role="ExamAssessment" EntitySet="ExamAssessment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__UserType__4AB81AF0" Association="Self.FK__User__UserType__4AB81AF0">
+      <End Role="UserType" EntitySet="UserType" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

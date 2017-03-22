@@ -51,40 +51,67 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
+    <Compile Include="Batch.cs">
+      <DependentUpon>UserScoresLogin.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <Compile Include="Class1.cs" />
+    <Compile Include="ExamAssessment.cs">
+      <DependentUpon>UserScoresLogin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExamSetting.cs">
+      <DependentUpon>UserScoresLogin.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Compile Include="StatusType.cs">
+      <DependentUpon>UserScoresLogin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>UserScoresLogin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserScoresLogin.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserScoresLogin.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserScoresLogin.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserScoresLogin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserScoresLogin.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserScoresLogin.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="UserType.cs">
+      <DependentUpon>UserScoresLogin.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
+    <EntityDeploy Include="UserScoresLogin.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UserScoresLogin.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="UserScoresLogin.edmx.diagram">
+      <DependentUpon>UserScoresLogin.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserScoresLogin.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserScoresLogin.edmx</DependentUpon>
+      <LastGenOutput>UserScoresLogin.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="UserScoresLogin.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserScoresLogin.edmx</DependentUpon>
+      <LastGenOutput>UserScoresLogin.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

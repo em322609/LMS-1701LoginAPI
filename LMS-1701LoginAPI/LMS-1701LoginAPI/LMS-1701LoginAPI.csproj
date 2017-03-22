@@ -136,6 +136,12 @@
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LMS-1701LoginAPI.DAL\LMS-1701LoginAPI.DAL.csproj">
+      <Project>{57e081dc-bf3c-4f02-b7c6-8829d852e555}</Project>
+      <Name>LMS-1701LoginAPI.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

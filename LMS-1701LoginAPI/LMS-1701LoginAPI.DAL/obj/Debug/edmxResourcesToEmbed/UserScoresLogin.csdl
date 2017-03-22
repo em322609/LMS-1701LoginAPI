@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UserScoresLoginModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="BatchPK" />
+    </Key>
+    <Property Name="BatchPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BatchID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="LengthInWeeks" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ExamAssessment">
+    <Key>
+      <PropertyRef Name="ExamAssessmentID" />
+    </Key>
+    <Property Name="ExamAssessmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="Attempts" Type="Int32" />
+    <Property Name="SettingsID" Type="Int32" />
+    <Property Name="TimeRemaining" Type="Time" Precision="7" />
+    <Property Name="IsExamComplete" Type="Boolean" />
+    <Property Name="Score" Type="Decimal" Precision="5" Scale="2" />
+    <NavigationProperty Name="ExamSetting" Relationship="Self.FK__ExamAsses__Setti__59063A47" FromRole="ExamAssessment" ToRole="ExamSettings" />
+    <NavigationProperty Name="User" Relationship="Self.FK__ExamAsses__UserI__5812160E" FromRole="ExamAssessment" ToRole="User" />
+  </EntityType>
+  <EntityType Name="ExamSetting">
+    <Key>
+      <PropertyRef Name="ExamSettingsID" />
+    </Key>
+    <Property Name="ExamSettingsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="LengthOfExamInMinutes" Type="Int32" />
+    <Property Name="ExamTemplateID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Editable" Type="Boolean" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="AllowedAttempts" Type="Int32" />
+    <NavigationProperty Name="ExamAssessments" Relationship="Self.FK__ExamAsses__Setti__59063A47" FromRole="ExamSettings" ToRole="ExamAssessment" />
+  </EntityType>
+  <EntityType Name="StatusType">
+    <Key>
+      <PropertyRef Name="StatusTypeID" />
+    </Key>
+    <Property Name="StatusTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserPK" />
+    </Key>
+    <Property Name="UserPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fname" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="lname" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="UserType" Type="Int32" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ExamAssessments" Relationship="Self.FK__ExamAsses__UserI__5812160E" FromRole="User" ToRole="ExamAssessment" />
+    <NavigationProperty Name="UserType1" Relationship="Self.FK__User__UserType__4AB81AF0" FromRole="User" ToRole="UserType" />
+  </EntityType>
+  <EntityType Name="UserType">
+    <Key>
+      <PropertyRef Name="UserTypePK" />
+    </Key>
+    <Property Name="UserTypePK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__User__UserType__4AB81AF0" FromRole="UserType" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__ExamAsses__Setti__59063A47">
+    <End Role="ExamSettings" Type="Self.ExamSetting" Multiplicity="0..1" />
+    <End Role="ExamAssessment" Type="Self.ExamAssessment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExamSettings">
+        <PropertyRef Name="ExamSettingsID" />
+      </Principal>
+      <Dependent Role="ExamAssessment">
+        <PropertyRef Name="SettingsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExamAsses__UserI__5812160E">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="ExamAssessment" Type="Self.ExamAssessment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserPK" />
+      </Principal>
+      <Dependent Role="ExamAssessment">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User__UserType__4AB81AF0">
+    <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserType">
+        <PropertyRef Name="UserTypePK" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="UserType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="UserScoresLoginEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Batches" EntityType="Self.Batch" />
+    <EntitySet Name="ExamAssessments" EntityType="Self.ExamAssessment" />
+    <EntitySet Name="ExamSettings" EntityType="Self.ExamSetting" />
+    <EntitySet Name="StatusTypes" EntityType="Self.StatusType" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserTypes" EntityType="Self.UserType" />
+    <AssociationSet Name="FK__ExamAsses__Setti__59063A47" Association="Self.FK__ExamAsses__Setti__59063A47">
+      <End Role="ExamSettings" EntitySet="ExamSettings" />
+      <End Role="ExamAssessment" EntitySet="ExamAssessments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExamAsses__UserI__5812160E" Association="Self.FK__ExamAsses__UserI__5812160E">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ExamAssessment" EntitySet="ExamAssessments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__UserType__4AB81AF0" Association="Self.FK__User__UserType__4AB81AF0">
+      <End Role="UserType" EntitySet="UserTypes" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
