@@ -65,3 +65,6 @@ C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LM
 C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\bin\System.Web.WebPages.xml
 C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\bin\System.Web.WebPages.Deployment.xml
 C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\bin\System.Web.WebPages.Razor.xml
+C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\bin\NLog.config
+C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\bin\NLog.dll
+C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\bin\NLog.xml

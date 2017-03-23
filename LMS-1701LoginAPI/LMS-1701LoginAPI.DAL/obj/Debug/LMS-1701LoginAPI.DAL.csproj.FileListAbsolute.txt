@@ -8,3 +8,5 @@ C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LM
 C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI.DAL\obj\Debug\LMS-1701LoginAPI.DAL.csprojResolveAssemblyReference.cache
 C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI.DAL\obj\Debug\LMS-1701LoginAPI.DAL.dll
 C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI.DAL\obj\Debug\LMS-1701LoginAPI.DAL.pdb
+C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI.DAL\bin\Debug\NLog.dll
+C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI.DAL\bin\Debug\NLog.xml
