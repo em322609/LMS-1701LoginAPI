@@ -151,6 +151,30 @@ error 6004: The table 'UserScoresLogin.dbo.Roster' is referenced by a relationsh
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="AddUserToBatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userID" Type="int" Mode="In" />
+    <Parameter Name="batchID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CheckForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CreateBatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="startdate" Type="date" Mode="In" />
+    <Parameter Name="lengthweeks" Type="int" Mode="In" />
+    <Parameter Name="batchID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CreateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fname" Type="varchar" Mode="In" />
+    <Parameter Name="lname" Type="varchar" Mode="In" />
+    <Parameter Name="UserType" Type="int" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="RemoveUserFromBatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userID" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="UserScoresLoginModelStoreContainer">
     <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ExamAssessment" EntityType="Self.ExamAssessment" Schema="dbo" store:Type="Tables" />

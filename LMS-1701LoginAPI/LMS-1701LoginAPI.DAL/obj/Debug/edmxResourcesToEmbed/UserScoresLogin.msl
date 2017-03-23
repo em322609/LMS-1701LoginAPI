@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="UserScoresLoginModelStoreContainer" CdmEntityContainer="UserScoresLoginEntities">
+  <EntityContainerMapping StorageEntityContainer="UserScoresLoginModelStoreContainer" CdmEntityContainer="UserScoresLoginEntities1">
     <EntitySetMapping Name="Batches">
       <EntityTypeMapping TypeName="UserScoresLoginModel.Batch">
         <MappingFragment StoreEntitySet="Batch">
@@ -66,5 +66,10 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="AddUserToBatch" FunctionName="UserScoresLoginModel.Store.AddUserToBatch" />
+    <FunctionImportMapping FunctionImportName="CheckForUser" FunctionName="UserScoresLoginModel.Store.CheckForUser" />
+    <FunctionImportMapping FunctionImportName="CreateBatch" FunctionName="UserScoresLoginModel.Store.CreateBatch" />
+    <FunctionImportMapping FunctionImportName="CreateUser" FunctionName="UserScoresLoginModel.Store.CreateUser" />
+    <FunctionImportMapping FunctionImportName="RemoveUserFromBatch" FunctionName="UserScoresLoginModel.Store.RemoveUserFromBatch" />
   </EntityContainerMapping>
 </Mapping>
