@@ -68,3 +68,6 @@ C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LM
 C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\bin\System.Web.Http.WebHost.xml
 C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\obj\Debug\LMS-1701LoginAPI.dll
 C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\obj\Debug\LMS-1701LoginAPI.pdb
+C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\bin\System.Web.Cors.dll
+C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\bin\System.Web.Http.Cors.dll
+C:\Users\em322_000\Desktop\LMS1701-LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\LMS-1701LoginAPI\bin\System.Web.Http.Cors.xml

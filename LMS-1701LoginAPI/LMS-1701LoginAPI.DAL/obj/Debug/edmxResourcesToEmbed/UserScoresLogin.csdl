@@ -9,20 +9,23 @@
     <Property Name="Name" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
     <Property Name="StartDate" Type="DateTime" Precision="0" />
     <Property Name="LengthInWeeks" Type="Int32" />
+    <NavigationProperty Name="Rosters" Relationship="Self.FK__Roster__BatchID__52593CB8" FromRole="Batch" ToRole="Roster" />
+    <NavigationProperty Name="ExamSettings" Relationship="Self.ExamSettings_Batch" FromRole="Batch" ToRole="ExamSettings" />
   </EntityType>
   <EntityType Name="ExamAssessment">
     <Key>
       <PropertyRef Name="ExamAssessmentID" />
     </Key>
     <Property Name="ExamAssessmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserID" Type="Int32" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
     <Property Name="Attempts" Type="Int32" />
-    <Property Name="SettingsID" Type="Int32" />
+    <Property Name="SettingsID" Type="Int32" Nullable="false" />
     <Property Name="TimeRemaining" Type="Time" Precision="7" />
     <Property Name="IsExamComplete" Type="Boolean" />
     <Property Name="Score" Type="Decimal" Precision="5" Scale="2" />
     <NavigationProperty Name="ExamSetting" Relationship="Self.FK__ExamAsses__Setti__59063A47" FromRole="ExamAssessment" ToRole="ExamSettings" />
     <NavigationProperty Name="User" Relationship="Self.FK__ExamAsses__UserI__5812160E" FromRole="ExamAssessment" ToRole="User" />
+    <NavigationProperty Name="QuestionOrders" Relationship="Self.FK__QuestionO__ExamA__5AEE82B9" FromRole="ExamAssessment" ToRole="QuestionOrder" />
   </EntityType>
   <EntityType Name="ExamSetting">
     <Key>
@@ -36,6 +39,16 @@
     <Property Name="EndTime" Type="DateTime" Precision="3" />
     <Property Name="AllowedAttempts" Type="Int32" />
     <NavigationProperty Name="ExamAssessments" Relationship="Self.FK__ExamAsses__Setti__59063A47" FromRole="ExamSettings" ToRole="ExamAssessment" />
+    <NavigationProperty Name="ExamQuestions" Relationship="Self.FK__ExamQuest__Setti__619B8048" FromRole="ExamSettings" ToRole="ExamQuestions" />
+    <NavigationProperty Name="Batches" Relationship="Self.ExamSettings_Batch" FromRole="ExamSettings" ToRole="Batch" />
+  </EntityType>
+  <EntityType Name="ExamSettings_User">
+    <Key>
+      <PropertyRef Name="SettingID" />
+    </Key>
+    <Property Name="SettingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK__ExamSetti__UserI__74AE54BC" FromRole="ExamSettings_User" ToRole="User" />
   </EntityType>
   <EntityType Name="StatusType">
     <Key>
@@ -43,6 +56,17 @@
     </Key>
     <Property Name="StatusTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Description" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Rosters" Relationship="Self.FK__Roster__Status__534D60F1" FromRole="StatusType" ToRole="Roster" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -51,10 +75,12 @@
     <Property Name="UserPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="fname" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
     <Property Name="lname" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="UserType" Type="Int32" />
+    <Property Name="UserType" Type="Int32" Nullable="false" />
     <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="ExamAssessments" Relationship="Self.FK__ExamAsses__UserI__5812160E" FromRole="User" ToRole="ExamAssessment" />
+    <NavigationProperty Name="ExamSettings_User" Relationship="Self.FK__ExamSetti__UserI__74AE54BC" FromRole="User" ToRole="ExamSettings_User" />
+    <NavigationProperty Name="Rosters" Relationship="Self.FK__Roster__UserID__5165187F" FromRole="User" ToRole="Roster" />
     <NavigationProperty Name="UserType1" Relationship="Self.FK__User__UserType__4AB81AF0" FromRole="User" ToRole="UserType" />
   </EntityType>
   <EntityType Name="UserType">
@@ -65,8 +91,53 @@
     <Property Name="Role" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Users" Relationship="Self.FK__User__UserType__4AB81AF0" FromRole="UserType" ToRole="User" />
   </EntityType>
+  <EntityType Name="ExamQuestion">
+    <Key>
+      <PropertyRef Name="SettingID" />
+      <PropertyRef Name="QuestionID" />
+    </Key>
+    <Property Name="SettingID" Type="Int32" Nullable="false" />
+    <Property Name="QuestionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ExamSetting" Relationship="Self.FK__ExamQuest__Setti__619B8048" FromRole="ExamQuestions" ToRole="ExamSettings" />
+  </EntityType>
+  <EntityType Name="QuestionOrder">
+    <Key>
+      <PropertyRef Name="QuestionNumber" />
+      <PropertyRef Name="QuestionID" />
+      <PropertyRef Name="ExamAssessmentFK" />
+    </Key>
+    <Property Name="QuestionNumber" Type="Int32" Nullable="false" />
+    <Property Name="QuestionID" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ExamAssessmentFK" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ExamAssessment" Relationship="Self.FK__QuestionO__ExamA__5AEE82B9" FromRole="QuestionOrder" ToRole="ExamAssessment" />
+  </EntityType>
+  <EntityType Name="Roster">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="BatchID" />
+      <PropertyRef Name="Status" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="BatchID" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Batch" Relationship="Self.FK__Roster__BatchID__52593CB8" FromRole="Roster" ToRole="Batch" />
+    <NavigationProperty Name="StatusType" Relationship="Self.FK__Roster__Status__534D60F1" FromRole="Roster" ToRole="StatusType" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Roster__UserID__5165187F" FromRole="Roster" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__Roster__BatchID__52593CB8">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="1" />
+    <End Role="Roster" Type="Self.Roster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="BatchPK" />
+      </Principal>
+      <Dependent Role="Roster">
+        <PropertyRef Name="BatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__ExamAsses__Setti__59063A47">
-    <End Role="ExamSettings" Type="Self.ExamSetting" Multiplicity="0..1" />
+    <End Role="ExamSettings" Type="Self.ExamSetting" Multiplicity="1" />
     <End Role="ExamAssessment" Type="Self.ExamAssessment" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ExamSettings">
@@ -78,7 +149,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__ExamAsses__UserI__5812160E">
-    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="ExamAssessment" Type="Self.ExamAssessment" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
@@ -89,8 +160,68 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__QuestionO__ExamA__5AEE82B9">
+    <End Role="ExamAssessment" Type="Self.ExamAssessment" Multiplicity="1" />
+    <End Role="QuestionOrder" Type="Self.QuestionOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExamAssessment">
+        <PropertyRef Name="ExamAssessmentID" />
+      </Principal>
+      <Dependent Role="QuestionOrder">
+        <PropertyRef Name="ExamAssessmentFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExamQuest__Setti__619B8048">
+    <End Role="ExamSettings" Type="Self.ExamSetting" Multiplicity="1" />
+    <End Role="ExamQuestions" Type="Self.ExamQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExamSettings">
+        <PropertyRef Name="ExamSettingsID" />
+      </Principal>
+      <Dependent Role="ExamQuestions">
+        <PropertyRef Name="SettingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExamSetti__UserI__74AE54BC">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="ExamSettings_User" Type="Self.ExamSettings_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserPK" />
+      </Principal>
+      <Dependent Role="ExamSettings_User">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Roster__Status__534D60F1">
+    <End Role="StatusType" Type="Self.StatusType" Multiplicity="1" />
+    <End Role="Roster" Type="Self.Roster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StatusType">
+        <PropertyRef Name="StatusTypeID" />
+      </Principal>
+      <Dependent Role="Roster">
+        <PropertyRef Name="Status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Roster__UserID__5165187F">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Roster" Type="Self.Roster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserPK" />
+      </Principal>
+      <Dependent Role="Roster">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__User__UserType__4AB81AF0">
-    <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+    <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
     <End Role="User" Type="Self.User" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="UserType">
@@ -101,13 +232,26 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="ExamSettings_Batch">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
+    <End Role="ExamSettings" Type="Self.ExamSetting" Multiplicity="*" />
+  </Association>
   <EntityContainer Name="UserScoresLoginEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Batches" EntityType="Self.Batch" />
     <EntitySet Name="ExamAssessments" EntityType="Self.ExamAssessment" />
     <EntitySet Name="ExamSettings" EntityType="Self.ExamSetting" />
+    <EntitySet Name="ExamSettings_User" EntityType="Self.ExamSettings_User" />
     <EntitySet Name="StatusTypes" EntityType="Self.StatusType" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <EntitySet Name="UserTypes" EntityType="Self.UserType" />
+    <EntitySet Name="ExamQuestions" EntityType="Self.ExamQuestion" />
+    <EntitySet Name="QuestionOrders" EntityType="Self.QuestionOrder" />
+    <EntitySet Name="Rosters" EntityType="Self.Roster" />
+    <AssociationSet Name="FK__Roster__BatchID__52593CB8" Association="Self.FK__Roster__BatchID__52593CB8">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="Roster" EntitySet="Rosters" />
+    </AssociationSet>
     <AssociationSet Name="FK__ExamAsses__Setti__59063A47" Association="Self.FK__ExamAsses__Setti__59063A47">
       <End Role="ExamSettings" EntitySet="ExamSettings" />
       <End Role="ExamAssessment" EntitySet="ExamAssessments" />
@@ -116,9 +260,33 @@
       <End Role="User" EntitySet="Users" />
       <End Role="ExamAssessment" EntitySet="ExamAssessments" />
     </AssociationSet>
+    <AssociationSet Name="FK__QuestionO__ExamA__5AEE82B9" Association="Self.FK__QuestionO__ExamA__5AEE82B9">
+      <End Role="ExamAssessment" EntitySet="ExamAssessments" />
+      <End Role="QuestionOrder" EntitySet="QuestionOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExamQuest__Setti__619B8048" Association="Self.FK__ExamQuest__Setti__619B8048">
+      <End Role="ExamSettings" EntitySet="ExamSettings" />
+      <End Role="ExamQuestions" EntitySet="ExamQuestions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExamSetti__UserI__74AE54BC" Association="Self.FK__ExamSetti__UserI__74AE54BC">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ExamSettings_User" EntitySet="ExamSettings_User" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Roster__Status__534D60F1" Association="Self.FK__Roster__Status__534D60F1">
+      <End Role="StatusType" EntitySet="StatusTypes" />
+      <End Role="Roster" EntitySet="Rosters" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Roster__UserID__5165187F" Association="Self.FK__Roster__UserID__5165187F">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Roster" EntitySet="Rosters" />
+    </AssociationSet>
     <AssociationSet Name="FK__User__UserType__4AB81AF0" Association="Self.FK__User__UserType__4AB81AF0">
       <End Role="UserType" EntitySet="UserTypes" />
       <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="ExamSettings_Batch" Association="Self.ExamSettings_Batch">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="ExamSettings" EntitySet="ExamSettings" />
     </AssociationSet>
     <FunctionImport Name="AddUserToBatch">
       <Parameter Name="userID" Mode="In" Type="Int32" />
@@ -144,5 +312,46 @@
     <FunctionImport Name="RemoveUserFromBatch">
       <Parameter Name="userID" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(UserScoresLoginModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(UserScoresLoginModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
   </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
 </Schema>

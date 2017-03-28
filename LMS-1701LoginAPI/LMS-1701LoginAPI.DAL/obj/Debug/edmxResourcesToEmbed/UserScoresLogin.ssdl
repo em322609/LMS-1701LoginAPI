@@ -15,19 +15,23 @@
       <PropertyRef Name="ExamAssessmentID" />
     </Key>
     <Property Name="ExamAssessmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserID" Type="int" />
+    <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="Attempts" Type="int" />
-    <Property Name="SettingsID" Type="int" />
+    <Property Name="SettingsID" Type="int" Nullable="false" />
     <Property Name="TimeRemaining" Type="time" Precision="7" />
     <Property Name="IsExamComplete" Type="bit" />
     <Property Name="Score" Type="decimal" Precision="5" Scale="2" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6013: The table/view 'UserScoresLogin.dbo.ExamQuestions' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ExamQuestions">
-          <Property Name="SettingID" Type="int" />
-          <Property Name="QuestionID" Type="varchar" MaxLength="50" />
-        </EntityType>-->
+warning 6002: The table/view 'UserScoresLogin.dbo.ExamQuestions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ExamQuestions">
+    <Key>
+      <PropertyRef Name="SettingID" />
+      <PropertyRef Name="QuestionID" />
+    </Key>
+    <Property Name="SettingID" Type="int" Nullable="false" />
+    <Property Name="QuestionID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="ExamSettings">
     <Key>
       <PropertyRef Name="ExamSettingsID" />
@@ -41,37 +45,62 @@ warning 6013: The table/view 'UserScoresLogin.dbo.ExamQuestions' does not have a
     <Property Name="AllowedAttempts" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6013: The table/view 'UserScoresLogin.dbo.ExamSettings_Batch' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ExamSettings_Batch">
-          <Property Name="SettingID" Type="int" />
-          <Property Name="BatchID" Type="int" />
-        </EntityType>-->
+warning 6002: The table/view 'UserScoresLogin.dbo.ExamSettings_Batch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ExamSettings_Batch">
+    <Key>
+      <PropertyRef Name="SettingID" />
+      <PropertyRef Name="BatchID" />
+    </Key>
+    <Property Name="SettingID" Type="int" Nullable="false" />
+    <Property Name="BatchID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ExamSettings_User">
+    <Key>
+      <PropertyRef Name="SettingID" />
+    </Key>
+    <Property Name="SettingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+  </EntityType>
   <!--Errors Found During Generation:
-warning 6013: The table/view 'UserScoresLogin.dbo.ExamSettings_User' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ExamSettings_User">
-          <Property Name="SettingID" Type="int" />
-          <Property Name="UserID" Type="int" />
-        </EntityType>-->
+warning 6002: The table/view 'UserScoresLogin.dbo.QuestionOrder' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="QuestionOrder">
+    <Key>
+      <PropertyRef Name="QuestionNumber" />
+      <PropertyRef Name="QuestionID" />
+      <PropertyRef Name="ExamAssessmentFK" />
+    </Key>
+    <Property Name="QuestionNumber" Type="int" Nullable="false" />
+    <Property Name="QuestionID" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ExamAssessmentFK" Type="int" Nullable="false" />
+  </EntityType>
   <!--Errors Found During Generation:
-warning 6013: The table/view 'UserScoresLogin.dbo.QuestionOrder' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="QuestionOrder">
-          <Property Name="QuestionNumber" Type="int" />
-          <Property Name="QuestionID" Type="varchar" MaxLength="50" />
-          <Property Name="ExamAssessmentFK" Type="int" />
-        </EntityType>-->
-  <!--Errors Found During Generation:
-warning 6013: The table/view 'UserScoresLogin.dbo.Roster' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Roster">
-          <Property Name="UserID" Type="int" />
-          <Property Name="BatchID" Type="int" />
-          <Property Name="Status" Type="int" />
-        </EntityType>-->
+warning 6002: The table/view 'UserScoresLogin.dbo.Roster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Roster">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="BatchID" />
+      <PropertyRef Name="Status" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="BatchID" Type="int" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="StatusType">
     <Key>
       <PropertyRef Name="StatusTypeID" />
     </Key>
     <Property Name="StatusTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Description" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -80,7 +109,7 @@ warning 6013: The table/view 'UserScoresLogin.dbo.Roster' does not have a primar
     <Property Name="UserPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="fname" Type="varchar" MaxLength="40" />
     <Property Name="lname" Type="varchar" MaxLength="40" />
-    <Property Name="UserType" Type="int" />
+    <Property Name="UserType" Type="int" Nullable="false" />
     <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="password" Type="varchar" MaxLength="25" Nullable="false" />
   </EntityType>
@@ -92,7 +121,7 @@ warning 6013: The table/view 'UserScoresLogin.dbo.Roster' does not have a primar
     <Property Name="Role" Type="varchar" MaxLength="30" />
   </EntityType>
   <Association Name="FK__ExamAsses__Setti__59063A47">
-    <End Role="ExamSettings" Type="Self.ExamSettings" Multiplicity="0..1" />
+    <End Role="ExamSettings" Type="Self.ExamSettings" Multiplicity="1" />
     <End Role="ExamAssessment" Type="Self.ExamAssessment" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ExamSettings">
@@ -104,7 +133,7 @@ warning 6013: The table/view 'UserScoresLogin.dbo.Roster' does not have a primar
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__ExamAsses__UserI__5812160E">
-    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="ExamAssessment" Type="Self.ExamAssessment" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
@@ -115,32 +144,104 @@ warning 6013: The table/view 'UserScoresLogin.dbo.Roster' does not have a primar
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <!--Errors Found During Generation:
-error 6004: The table 'UserScoresLogin.dbo.ExamQuestions' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__ExamQuest__Setti__619B8048" />-->
-  <!--Errors Found During Generation:
-error 6004: The table 'UserScoresLogin.dbo.ExamSettings_Batch' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__ExamSetti__Batch__5DCAEF64" />-->
-  <!--Errors Found During Generation:
-error 6004: The table 'UserScoresLogin.dbo.ExamSettings_Batch' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__ExamSetti__Setti__5CD6CB2B" />-->
-  <!--Errors Found During Generation:
-error 6004: The table 'UserScoresLogin.dbo.ExamSettings_User' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__ExamSetti__UserI__5FB337D6" />-->
-  <!--Errors Found During Generation:
-error 6004: The table 'UserScoresLogin.dbo.QuestionOrder' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__QuestionO__ExamA__5AEE82B9" />-->
-  <!--Errors Found During Generation:
-error 6004: The table 'UserScoresLogin.dbo.Roster' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__Roster__BatchID__52593CB8" />-->
-  <!--Errors Found During Generation:
-error 6004: The table 'UserScoresLogin.dbo.Roster' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__Roster__Status__534D60F1" />-->
-  <!--Errors Found During Generation:
-error 6004: The table 'UserScoresLogin.dbo.Roster' is referenced by a relationship, but cannot be found.
-        <Association Name="FK__Roster__UserID__5165187F" />-->
+  <Association Name="FK__ExamQuest__Setti__619B8048">
+    <End Role="ExamSettings" Type="Self.ExamSettings" Multiplicity="1" />
+    <End Role="ExamQuestions" Type="Self.ExamQuestions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExamSettings">
+        <PropertyRef Name="ExamSettingsID" />
+      </Principal>
+      <Dependent Role="ExamQuestions">
+        <PropertyRef Name="SettingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExamSetti__Batch__5DCAEF64">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="1" />
+    <End Role="ExamSettings_Batch" Type="Self.ExamSettings_Batch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="BatchPK" />
+      </Principal>
+      <Dependent Role="ExamSettings_Batch">
+        <PropertyRef Name="BatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExamSetti__Setti__5CD6CB2B">
+    <End Role="ExamSettings" Type="Self.ExamSettings" Multiplicity="1" />
+    <End Role="ExamSettings_Batch" Type="Self.ExamSettings_Batch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExamSettings">
+        <PropertyRef Name="ExamSettingsID" />
+      </Principal>
+      <Dependent Role="ExamSettings_Batch">
+        <PropertyRef Name="SettingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExamSetti__UserI__74AE54BC">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="ExamSettings_User" Type="Self.ExamSettings_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserPK" />
+      </Principal>
+      <Dependent Role="ExamSettings_User">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__QuestionO__ExamA__5AEE82B9">
+    <End Role="ExamAssessment" Type="Self.ExamAssessment" Multiplicity="1" />
+    <End Role="QuestionOrder" Type="Self.QuestionOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExamAssessment">
+        <PropertyRef Name="ExamAssessmentID" />
+      </Principal>
+      <Dependent Role="QuestionOrder">
+        <PropertyRef Name="ExamAssessmentFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Roster__BatchID__52593CB8">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="1" />
+    <End Role="Roster" Type="Self.Roster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="BatchPK" />
+      </Principal>
+      <Dependent Role="Roster">
+        <PropertyRef Name="BatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Roster__Status__534D60F1">
+    <End Role="StatusType" Type="Self.StatusType" Multiplicity="1" />
+    <End Role="Roster" Type="Self.Roster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StatusType">
+        <PropertyRef Name="StatusTypeID" />
+      </Principal>
+      <Dependent Role="Roster">
+        <PropertyRef Name="Status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Roster__UserID__5165187F">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Roster" Type="Self.Roster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserPK" />
+      </Principal>
+      <Dependent Role="Roster">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__User__UserType__4AB81AF0">
-    <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+    <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
     <End Role="User" Type="Self.User" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="UserType">
@@ -172,16 +273,75 @@ error 6004: The table 'UserScoresLogin.dbo.Roster' is referenced by a relationsh
     <Parameter Name="email" Type="varchar" Mode="In" />
     <Parameter Name="password" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="RemoveUserFromBatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="userID" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="UserScoresLoginModelStoreContainer">
     <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ExamAssessment" EntityType="Self.ExamAssessment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ExamSettings" EntityType="Self.ExamSettings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExamSettings_User" EntityType="Self.ExamSettings_User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StatusType" EntityType="Self.StatusType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExamQuestions" EntityType="Self.ExamQuestions" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ExamQuestions].[SettingID] AS [SettingID], 
+    [ExamQuestions].[QuestionID] AS [QuestionID]
+    FROM [dbo].[ExamQuestions] AS [ExamQuestions]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ExamSettings_Batch" EntityType="Self.ExamSettings_Batch" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ExamSettings_Batch].[SettingID] AS [SettingID], 
+    [ExamSettings_Batch].[BatchID] AS [BatchID]
+    FROM [dbo].[ExamSettings_Batch] AS [ExamSettings_Batch]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="QuestionOrder" EntityType="Self.QuestionOrder" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [QuestionOrder].[QuestionNumber] AS [QuestionNumber], 
+    [QuestionOrder].[QuestionID] AS [QuestionID], 
+    [QuestionOrder].[ExamAssessmentFK] AS [ExamAssessmentFK]
+    FROM [dbo].[QuestionOrder] AS [QuestionOrder]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Roster" EntityType="Self.Roster" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Roster].[UserID] AS [UserID], 
+    [Roster].[BatchID] AS [BatchID], 
+    [Roster].[Status] AS [Status]
+    FROM [dbo].[Roster] AS [Roster]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK__ExamAsses__Setti__59063A47" Association="Self.FK__ExamAsses__Setti__59063A47">
       <End Role="ExamSettings" EntitySet="ExamSettings" />
       <End Role="ExamAssessment" EntitySet="ExamAssessment" />
@@ -189,6 +349,38 @@ error 6004: The table 'UserScoresLogin.dbo.Roster' is referenced by a relationsh
     <AssociationSet Name="FK__ExamAsses__UserI__5812160E" Association="Self.FK__ExamAsses__UserI__5812160E">
       <End Role="User" EntitySet="User" />
       <End Role="ExamAssessment" EntitySet="ExamAssessment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExamQuest__Setti__619B8048" Association="Self.FK__ExamQuest__Setti__619B8048">
+      <End Role="ExamSettings" EntitySet="ExamSettings" />
+      <End Role="ExamQuestions" EntitySet="ExamQuestions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExamSetti__Batch__5DCAEF64" Association="Self.FK__ExamSetti__Batch__5DCAEF64">
+      <End Role="Batch" EntitySet="Batch" />
+      <End Role="ExamSettings_Batch" EntitySet="ExamSettings_Batch" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExamSetti__Setti__5CD6CB2B" Association="Self.FK__ExamSetti__Setti__5CD6CB2B">
+      <End Role="ExamSettings" EntitySet="ExamSettings" />
+      <End Role="ExamSettings_Batch" EntitySet="ExamSettings_Batch" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExamSetti__UserI__74AE54BC" Association="Self.FK__ExamSetti__UserI__74AE54BC">
+      <End Role="User" EntitySet="User" />
+      <End Role="ExamSettings_User" EntitySet="ExamSettings_User" />
+    </AssociationSet>
+    <AssociationSet Name="FK__QuestionO__ExamA__5AEE82B9" Association="Self.FK__QuestionO__ExamA__5AEE82B9">
+      <End Role="ExamAssessment" EntitySet="ExamAssessment" />
+      <End Role="QuestionOrder" EntitySet="QuestionOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Roster__BatchID__52593CB8" Association="Self.FK__Roster__BatchID__52593CB8">
+      <End Role="Batch" EntitySet="Batch" />
+      <End Role="Roster" EntitySet="Roster" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Roster__Status__534D60F1" Association="Self.FK__Roster__Status__534D60F1">
+      <End Role="StatusType" EntitySet="StatusType" />
+      <End Role="Roster" EntitySet="Roster" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Roster__UserID__5165187F" Association="Self.FK__Roster__UserID__5165187F">
+      <End Role="User" EntitySet="User" />
+      <End Role="Roster" EntitySet="Roster" />
     </AssociationSet>
     <AssociationSet Name="FK__User__UserType__4AB81AF0" Association="Self.FK__User__UserType__4AB81AF0">
       <End Role="UserType" EntitySet="UserType" />
